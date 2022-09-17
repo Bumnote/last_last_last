@@ -4,8 +4,8 @@ import com.example.together.PhotoConfigDto.PhotoDeleteInfoDto;
 import com.example.together.PhotoConfigDto.PhotoModifyInfoDto;
 import com.example.together.PhotoConfigDto.PhotoSuccessDto;
 import com.example.together.PhotoController.commentController.PhotoCommentForm;
-import com.example.together.PhotoEntity.answer.Answer;
-import com.example.together.PhotoEntity.comment.Comment;
+import com.example.together.PhotoEntity.photoanswer.PhotoAnswer;
+import com.example.together.PhotoEntity.photocomment.PhotoComment;
 import com.example.together.PhotoService.PhotoAnswerService;
 import com.example.together.PhotoService.PhotoCommentService;
 import com.example.together.PhotoService.PhotoQuestionService;
@@ -84,13 +84,13 @@ public class PhotoCommentApi {
     public ResponseEntity<PhotoCommentCreateForm> createAnswerComment(@PathVariable("id") Long id, @Valid @RequestBody PhotoCommentForm photoCommentForm,
                                                                       BindingResult bindingResult) {
 
-        Optional<Answer> answer = Optional.ofNullable(this.photoAnswerService.getAnswer(id));
+        Optional<PhotoAnswer> answer = Optional.ofNullable(this.photoAnswerService.getPhotoAnswer(id));
 
         if (answer.isPresent()) {
             if (bindingResult.hasErrors()) {
                 throw new IllegalArgumentException("잘못된 입력 값입니다.");
             }
-           Comment c = this.photoCommentService.create(answer.get(), photoCommentForm.getContent(), photoCommentForm.getUsername(), photoCommentForm.getPassword());
+           PhotoComment c = this.photoCommentService.create(answer.get(), photoCommentForm.getContent(), photoCommentForm.getUsername(), photoCommentForm.getPassword());
             // 이름이랑 제목만 전달
             PhotoCommentCreateForm photoCommentCreateForm = new PhotoCommentCreateForm(photoCommentForm.getContent(), photoCommentForm.getUsername());
             return ResponseEntity.ok(photoCommentCreateForm);
@@ -139,9 +139,9 @@ public class PhotoCommentApi {
         if (bindingResult.hasErrors()) {
             throw new IllegalArgumentException("잘못된 입력 값입니다.");
         }
-        Optional<Comment> comment = this.photoCommentService.getComment(id);
+        Optional<PhotoComment> comment = this.photoCommentService.getComment(id);
         if (comment.isPresent()) {
-            Comment c = comment.get();
+            PhotoComment c = comment.get();
 
             if (!c.getPassword().equals(photoModifyInfoDto.getPassword())) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
@@ -160,9 +160,9 @@ public class PhotoCommentApi {
     // 대댓글 삭제 --> form-data로 받아야 한다.
     @DeleteMapping("/{id}")
     public ResponseEntity<PhotoSuccessDto> deleteComment(@PathVariable("id") Long id, @Valid PhotoDeleteInfoDto deleteInfoDto) {
-        Optional<Comment> comment = this.photoCommentService.getComment(id);
+        Optional<PhotoComment> comment = this.photoCommentService.getComment(id);
         if (comment.isPresent()) {
-            Comment c = comment.get();
+            PhotoComment c = comment.get();
 
             if (!c.getPassword().equals(deleteInfoDto.getPassword())) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");

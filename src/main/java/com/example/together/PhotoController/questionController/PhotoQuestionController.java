@@ -1,7 +1,7 @@
 package com.example.together.PhotoController.questionController;
 
 import com.example.together.PhotoController.answerController.PhotoAnswerForm;
-import com.example.together.PhotoEntity.answer.Answer;
+import com.example.together.PhotoEntity.photoanswer.PhotoAnswer;
 import com.example.together.PhotoEntity.photoquestion.PhotoQuestion;
 import com.example.together.PhotoService.PhotoAnswerService;
 import com.example.together.PhotoService.PhotoQuestionService;
@@ -54,7 +54,7 @@ public class PhotoQuestionController {
                          @RequestParam(value = "page", defaultValue = "0") int page) {
 
         // 답변 페이징 처리
-        Page<Answer> pagingAnswer = photoAnswerService.getList(page, id);
+        Page<PhotoAnswer> pagingAnswer = photoAnswerService.getList(page, id);
         PhotoQuestion photoQuestion = this.photoQuestionService.getQuestion(id);
         photoQuestionService.updateView(id); // views ++ 조회수 처리
         model.addAttribute("pagingAnswer", pagingAnswer);

@@ -1,7 +1,7 @@
 package com.example.together.PhotoEntity.photoquestion;
 
-import com.example.together.PhotoEntity.answer.Answer;
-import com.example.together.PhotoEntity.comment.Comment;
+import com.example.together.PhotoEntity.photoanswer.PhotoAnswer;
+import com.example.together.PhotoEntity.photocomment.PhotoComment;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -44,11 +44,11 @@ public class PhotoQuestion {
      */
     @JsonIgnore
     @OneToMany(mappedBy = "photoQuestion", cascade = CascadeType.REMOVE)
-    private List<Answer> answerList;
+    private List<PhotoAnswer> photoAnswerList;
 
     @JsonIgnore
     @OneToMany(mappedBy = "photoQuestion", cascade = CascadeType.REMOVE)
-    private List<Comment> commentList;
+    private List<PhotoComment> photoCommentList;
 
     @Column(columnDefinition = "integer default 0", nullable = false)
     private int view;

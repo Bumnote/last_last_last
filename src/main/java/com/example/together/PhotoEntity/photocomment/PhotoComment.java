@@ -1,6 +1,6 @@
-package com.example.together.PhotoEntity.comment;
+package com.example.together.PhotoEntity.photocomment;
 
-import com.example.together.PhotoEntity.answer.Answer;
+import com.example.together.PhotoEntity.photoanswer.PhotoAnswer;
 import com.example.together.PhotoEntity.photoquestion.PhotoQuestion;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-public class Comment {
+public class PhotoComment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +33,7 @@ public class Comment {
 
     @JsonIgnore
     @ManyToOne
-    private Answer answer;
+    private PhotoAnswer photoAnswer;
 
     /*
      * 그리고 댓글을 수정하거나 삭제한 후에 질문 상세 페이지로 리다이렉트 하기 위해서는
@@ -46,8 +46,8 @@ public class Comment {
         Long result = null;
         if (this.photoQuestion != null) {
             result = this.photoQuestion.getId();
-        } else if (this.answer != null) {
-            result = this.answer.getPhotoQuestion().getId();
+        } else if (this.photoAnswer != null) {
+            result = this.photoAnswer.getPhotoQuestion().getId();
         }
         return result;
     }

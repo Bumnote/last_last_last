@@ -1,6 +1,6 @@
-package com.example.together.PhotoEntity.answer;
+package com.example.together.PhotoEntity.photoanswer;
 
-import com.example.together.PhotoEntity.comment.Comment;
+import com.example.together.PhotoEntity.photocomment.PhotoComment;
 import com.example.together.PhotoEntity.photoquestion.PhotoQuestion;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
@@ -13,7 +13,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Answer {
+public class PhotoAnswer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +33,7 @@ public class Answer {
     private String password;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "answer", cascade = CascadeType.REMOVE)
-    private List<Comment> commentList;
+    @OneToMany(mappedBy = "photoAnswer", cascade = CascadeType.REMOVE)
+    private List<PhotoComment> photoCommentList;
 
 }

@@ -4,7 +4,7 @@ import com.example.together.PhotoConfigDto.PhotoDeleteInfoDto;
 import com.example.together.PhotoConfigDto.PhotoModifyInfoDto;
 import com.example.together.PhotoConfigDto.PhotoSuccessDto;
 import com.example.together.PhotoController.answerController.PhotoAnswerForm;
-import com.example.together.PhotoEntity.answer.Answer;
+import com.example.together.PhotoEntity.photoanswer.PhotoAnswer;
 import com.example.together.PhotoEntity.photoquestion.PhotoQuestion;
 import com.example.together.PhotoService.PhotoAnswerService;
 import com.example.together.PhotoService.PhotoQuestionService;
@@ -58,12 +58,12 @@ public class PhotoAnswerApi {
         if (bindingResult.hasErrors()) {
             throw new IllegalArgumentException("잘못된 입력 값입니다.");
         }
-       Answer answer = this.photoAnswerService.getAnswer(id);
+       PhotoAnswer photoAnswer = this.photoAnswerService.getPhotoAnswer(id);
 
-        if (!answer.getPassword().equals(photoModifyInfoDto.getPassword())) {
+        if (!photoAnswer.getPassword().equals(photoModifyInfoDto.getPassword())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
-        this.photoAnswerService.modify(answer, photoModifyInfoDto.getContent());
+        this.photoAnswerService.modify(photoAnswer, photoModifyInfoDto.getContent());
 
         PhotoAnswerModifyForm photoAnswerModifyForm = new PhotoAnswerModifyForm(photoModifyInfoDto.getContent());
         return ResponseEntity.ok(photoAnswerModifyForm);
@@ -72,13 +72,13 @@ public class PhotoAnswerApi {
     // 댓글 삭제 --> form-data 로 보내야 함
     @DeleteMapping("/{id}")
     public ResponseEntity<PhotoSuccessDto> answerDelete(@Valid PhotoDeleteInfoDto photoDeleteInfoDto, @PathVariable("id") Long id) {
-      Answer answer = this.photoAnswerService.getAnswer(id);
+      PhotoAnswer photoAnswer = this.photoAnswerService.getPhotoAnswer(id);
 
-        if (!answer.getPassword().equals(photoDeleteInfoDto.getPassword())) {
+        if (!photoAnswer.getPassword().equals(photoDeleteInfoDto.getPassword())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
         }
 
-        PhotoSuccessDto photoSuccessDto = new PhotoSuccessDto(this.photoAnswerService.delete(answer));
+        PhotoSuccessDto photoSuccessDto = new PhotoSuccessDto(this.photoAnswerService.delete(photoAnswer));
         return ResponseEntity.ok(photoSuccessDto);
     }
 

@@ -1,6 +1,6 @@
 package com.example.together.PhotoApi.PhotoAnswerApiController;
 
-import com.example.together.PhotoEntity.comment.Comment;
+import com.example.together.PhotoEntity.photocomment.PhotoComment;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,11 +20,11 @@ public class PhotoAnswerDto {
 
     private String username;
 
-    private List<Comment> commentList;
+    private List<PhotoComment> commentList;
 
 
     public PhotoAnswerDto(Long id, String content, String createDate,
-                          String username, List<Comment> commentList) {
+                          String username, List<PhotoComment> commentList) {
         this.id = id;
         this.content = content;
         this.date = createDate;

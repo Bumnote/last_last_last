@@ -5,8 +5,8 @@ import com.example.together.PhotoApi.PhotoCommentApiController.PhotoCommentDto;
 import com.example.together.PhotoConfigDto.PhotoDeleteInfoDto;
 import com.example.together.PhotoConfigDto.PhotoSuccessDto;
 import com.example.together.PhotoController.questionController.PhotoQuestionForm;
-import com.example.together.PhotoEntity.answer.Answer;
-import com.example.together.PhotoEntity.comment.Comment;
+import com.example.together.PhotoEntity.photoanswer.PhotoAnswer;
+import com.example.together.PhotoEntity.photocomment.PhotoComment;
 import com.example.together.PhotoEntity.photoquestion.PhotoQuestion;
 import com.example.together.PhotoService.PhotoAnswerService;
 import com.example.together.PhotoService.PhotoCommentService;
@@ -58,9 +58,9 @@ public class PhotoQuestionApi {
     public ResponseEntity<Map<String, Object>> detail(@PathVariable("id") Long id, @RequestParam(value = "page", defaultValue = "0") int page) {
 
         // 답변 페이징 처리
-        Page<Answer> pagingAnswer = photoAnswerService.getList(page, id);
+        Page<PhotoAnswer> pagingAnswer = photoAnswerService.getList(page, id);
         PhotoQuestion photoQuestion = this.photoQuestionService.getQuestion(id);
-        Page<Comment> commentPage = photoCommentService.getQuestionCommentList(page, id);
+        Page<PhotoComment> commentPage = photoCommentService.getQuestionCommentList(page, id);
 
         if (pagingAnswer.getNumberOfElements() == 0 && page != 0) {
             throw new IllegalArgumentException("잘못된 입력 값입니다.");
@@ -69,7 +69,7 @@ public class PhotoQuestionApi {
         photoQuestionService.updateView(id); // views ++ 조회수 처리
         PhotoQuestionDto photoQuestionDto = new PhotoQuestionDto(photoQuestion.getId(), photoQuestion.getSubject(), photoQuestion.getContent(), photoQuestion.getDate(), photoQuestion.getUsername(), photoQuestion.getView(), photoQuestion.getFilename(), photoQuestion.getFilepath());
 
-        Page<PhotoAnswerDto> answerPagingDto = pagingAnswer.map(post -> new PhotoAnswerDto(post.getId(), post.getContent(), post.getDate(), post.getUsername(), post.getCommentList()));
+        Page<PhotoAnswerDto> answerPagingDto = pagingAnswer.map(post -> new PhotoAnswerDto(post.getId(), post.getContent(), post.getDate(), post.getUsername(), post.getPhotoCommentList()));
         Page<PhotoCommentDto> commentDtoPage = commentPage.map(post -> new PhotoCommentDto(post.getId(), post.getContent(), post.getDate(), post.getUsername()));
 
         Map<String, Object> result = new HashMap<>();

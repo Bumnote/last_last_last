@@ -23,7 +23,7 @@ public interface QuestionRepository extends JpaRepository<PhotoQuestion, Long> {
     @Query("select "
             + "distinct q "
             + "from PhotoQuestion q "
-            + "left outer join Answer a on a.photoQuestion=q "
+            + "left outer join PhotoAnswer a on a.photoQuestion=q "
             + "where "
             + "   q.subject like %:kw% "
             + "   or q.content like %:kw% "
