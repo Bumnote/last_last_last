@@ -60,6 +60,12 @@ public class PhotoAnswerService {
         this.answerRepository.save(photoAnswer);
     }
 
+    public PhotoAnswer new_modify(PhotoAnswer photoAnswer, String content){
+        photoAnswer.setContent(content);
+        return photoAnswer;
+    }
+
+
     public Boolean delete(PhotoAnswer photoAnswer) {
         this.answerRepository.delete(photoAnswer);;
         return true;

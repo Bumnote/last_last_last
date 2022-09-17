@@ -90,7 +90,7 @@ public class PhotoCommentApi {
             if (bindingResult.hasErrors()) {
                 throw new IllegalArgumentException("잘못된 입력 값입니다.");
             }
-           PhotoComment c = this.photoCommentService.create(answer.get(), photoCommentForm.getContent(), photoCommentForm.getUsername(), photoCommentForm.getPassword());
+            PhotoComment c = this.photoCommentService.create(answer.get(), photoCommentForm.getContent(), photoCommentForm.getUsername(), photoCommentForm.getPassword());
             // 이름이랑 제목만 전달
             PhotoCommentCreateForm photoCommentCreateForm = new PhotoCommentCreateForm(photoCommentForm.getContent(), photoCommentForm.getUsername());
             return ResponseEntity.ok(photoCommentCreateForm);
@@ -133,6 +133,7 @@ public class PhotoCommentApi {
 //        return ResponseEntity.ok(commentForm);
 //    }
 
+    // 대댓글 수정
     @PutMapping("/{id}")
     public ResponseEntity<PhotoCommentModifyForm> modifyComment(@Valid @RequestBody PhotoModifyInfoDto photoModifyInfoDto, BindingResult bindingResult,
                                                                 @PathVariable("id") Long id) {
@@ -149,7 +150,8 @@ public class PhotoCommentApi {
 
             c = this.photoCommentService.modify(c, photoModifyInfoDto.getContent());
 
-            PhotoCommentModifyForm photoCommentModifyForm = new PhotoCommentModifyForm(photoModifyInfoDto.getContent());
+            // 대댓글 --> username, date / 수정된 content
+            PhotoCommentModifyForm photoCommentModifyForm = new PhotoCommentModifyForm(c.getContent(), c.getUsername(), c.getDate());
             return ResponseEntity.ok(photoCommentModifyForm);
 
         } else {

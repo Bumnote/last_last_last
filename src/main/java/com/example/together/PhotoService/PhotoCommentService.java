@@ -74,6 +74,7 @@ public class PhotoCommentService {
         return c;
     }
 
+
     public Boolean delete(PhotoComment c) {
 
         this.commentRepository.delete(c);

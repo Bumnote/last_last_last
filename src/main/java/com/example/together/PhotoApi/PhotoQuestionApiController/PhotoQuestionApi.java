@@ -118,8 +118,8 @@ public class PhotoQuestionApi {
         }
 
         this.photoQuestionService.modify(photoQuestion, photoQuestionForm.getSubject(), photoQuestionForm.getContent(), file);
-
-       PhotoQuestionModifyForm photoQuestionModifyForm = new PhotoQuestionModifyForm(photoQuestion.getSubject(), photoQuestion.getContent(), photoQuestion.getFilename(), photoQuestion.getFilepath());
+        // --> 게시글
+        PhotoQuestionModifyForm photoQuestionModifyForm = new PhotoQuestionModifyForm(photoQuestion.getSubject(), photoQuestion.getContent(), photoQuestion.getFilename(), photoQuestion.getFilepath(), photoQuestion.getUsername(), photoQuestion.getDate());
         return ResponseEntity.ok(photoQuestionModifyForm);
     }
 

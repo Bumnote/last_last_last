@@ -30,7 +30,7 @@ public class PhotoAnswerApi {
     public ResponseEntity<PhotoAnswerModifyForm> createAnswer(@PathVariable("id") Long id,
                                                               @Valid @RequestBody PhotoAnswerForm photoAnswerForm, BindingResult bindingResult) {
 
-       PhotoQuestion photoQuestion = photoQuestionService.getQuestion(id);
+        PhotoQuestion photoQuestion = photoQuestionService.getQuestion(id);
 
         if (bindingResult.hasErrors()) {
 
@@ -58,21 +58,22 @@ public class PhotoAnswerApi {
         if (bindingResult.hasErrors()) {
             throw new IllegalArgumentException("잘못된 입력 값입니다.");
         }
-       PhotoAnswer photoAnswer = this.photoAnswerService.getPhotoAnswer(id);
+        PhotoAnswer photoAnswer = this.photoAnswerService.getPhotoAnswer(id); // 댓글을 불러온다.
 
         if (!photoAnswer.getPassword().equals(photoModifyInfoDto.getPassword())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
-        this.photoAnswerService.modify(photoAnswer, photoModifyInfoDto.getContent());
+        PhotoAnswer a = this.photoAnswerService.new_modify(photoAnswer, photoModifyInfoDto.getContent());
 
-        PhotoAnswerModifyForm photoAnswerModifyForm = new PhotoAnswerModifyForm(photoModifyInfoDto.getContent());
+        // 댓글 수정 시 --> content, username, date 까지 포함
+        PhotoAnswerModifyForm photoAnswerModifyForm = new PhotoAnswerModifyForm(a.getContent(), a.getUsername(), a.getDate());
         return ResponseEntity.ok(photoAnswerModifyForm);
     }
 
     // 댓글 삭제 --> form-data 로 보내야 함
     @DeleteMapping("/{id}")
     public ResponseEntity<PhotoSuccessDto> answerDelete(@Valid PhotoDeleteInfoDto photoDeleteInfoDto, @PathVariable("id") Long id) {
-      PhotoAnswer photoAnswer = this.photoAnswerService.getPhotoAnswer(id);
+        PhotoAnswer photoAnswer = this.photoAnswerService.getPhotoAnswer(id);
 
         if (!photoAnswer.getPassword().equals(photoDeleteInfoDto.getPassword())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
