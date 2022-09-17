@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>게시글 작성 Form</title>
+</head>
+
+<style>
+    .layout {
+        width:500px;
+        margin: 0 auto;
+        margin-top: 40px;
+    }
+
+    .layout input {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .layout textarea {
+        width: 100%;
+        margin-top: 10px;
+        min-height: 300px;
+    }
+
+</style>
+
+<body>
+
+<div class="layout">
+    <form action="/api/question/create" method="post" enctype="multipart/form-data">
+        <input name="subject" type="text" placeholder="제목">
+        <textarea name="content" placeholder="내용"></textarea>
+        <input name="username" type="text" placeholder="작성자 이름">
+        <input name="password" type="password" placeholder="작성자 비밀번호">
+        <input name="file" type="file">
+        <button type="submit">작성</button>
+    </form>
+</div>
+
+</body>
+</html>
