@@ -146,7 +146,7 @@ public class PhotoQuestionService {
         UUID uuid = UUID.randomUUID(); // 식별자를 생성
         String filename = uuid + "_" + file.getOriginalFilename();
 
-        File saveFile = new File(projectPath, "filename"); // projectPath 경로에 해당 이름으로 담긴다.
+        File saveFile = new File(projectPath, filename); // projectPath 경로에 해당 이름으로 담긴다.
         file.transferTo(saveFile);
 
         photoQuestion.setFilename(filename);
