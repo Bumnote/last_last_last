@@ -22,8 +22,8 @@ public interface QuestionRepository extends JpaRepository<PhotoQuestion, Long> {
 
     @Query("select "
             + "distinct q "
-            + "from Question q "
-            + "left outer join Answer a on a.question=q "
+            + "from PhotoQuestion q "
+            + "left outer join Answer a on a.photoQuestion=q "
             + "where "
             + "   q.subject like %:kw% "
             + "   or q.content like %:kw% "
@@ -34,6 +34,6 @@ public interface QuestionRepository extends JpaRepository<PhotoQuestion, Long> {
 
     // 조회수 처리
     @Modifying
-    @Query("update Question q set q.view = q.view + 1 where q.id = :id")
+    @Query("update PhotoQuestion q set q.view = q.view + 1 where q.id = :id")
     int updateView(@Param("id") Long id);
 }

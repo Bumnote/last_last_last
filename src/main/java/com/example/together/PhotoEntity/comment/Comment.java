@@ -29,7 +29,7 @@ public class Comment {
 
     @JsonIgnore
     @ManyToOne
-    private PhotoQuestion question;
+    private PhotoQuestion photoQuestion;
 
     @JsonIgnore
     @ManyToOne
@@ -44,10 +44,10 @@ public class Comment {
      * */
     public Long getQuestionId() {
         Long result = null;
-        if (this.question != null) {
-            result = this.question.getId();
+        if (this.photoQuestion != null) {
+            result = this.photoQuestion.getId();
         } else if (this.answer != null) {
-            result = this.answer.getQuestion().getId();
+            result = this.answer.getPhotoQuestion().getId();
         }
         return result;
     }

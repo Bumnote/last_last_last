@@ -33,7 +33,7 @@ public class PhotoCommentService {
     public Page<Comment> getQuestionCommentList(int page, Long id) {
         PhotoQuestion photoQuestion = photoQuestionService.getQuestion(id);
         Pageable pageable = PageRequest.of(page, 10);
-        return this.commentRepository.findAllByQuestion(photoQuestion, pageable);
+        return this.commentRepository.findAllByPhotoQuestion(photoQuestion, pageable);
     }
 
 
@@ -56,7 +56,7 @@ public class PhotoCommentService {
         c.setContent(content);
         String currentTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")); // 작성 시간 포멧팅
         c.setDate(currentTime);
-        c.setQuestion(photoQuestion);
+        c.setPhotoQuestion(photoQuestion);
         c.setUsername(username);
         c.setPassword(password);
         c = this.commentRepository.save(c);

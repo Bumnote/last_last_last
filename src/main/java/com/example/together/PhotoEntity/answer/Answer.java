@@ -24,7 +24,7 @@ public class Answer {
 
     @ManyToOne
     @JoinColumn
-    private PhotoQuestion question;
+    private PhotoQuestion photoQuestion;
 
     @CreatedDate
     private String date;

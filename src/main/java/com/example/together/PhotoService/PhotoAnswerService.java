@@ -30,7 +30,7 @@ public class PhotoAnswerService {
         answer.setContent(content);
         String currentTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")); // 작성 시간 포멧팅
         answer.setDate(currentTime);
-        answer.setQuestion(photoQuestion);
+        answer.setPhotoQuestion(photoQuestion);
         answer.setUsername(username);
         answer.setPassword(password);
         this.answerRepository.save(answer);
@@ -42,7 +42,7 @@ public class PhotoAnswerService {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("date"));
         Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
-        return this.answerRepository.findAllByQuestion(photoQuestion, pageable);
+        return this.answerRepository.findAllByPhotoQuestion(photoQuestion, pageable);
     }
 
     // 아래 두 함수는 AnswerController 에서 필요한 답변조회와 답변수정 기능

@@ -43,11 +43,11 @@ public class PhotoQuestion {
      * @OneToMany의 속성으로 cascade = CascadeType.REMOVE를 사용했다.
      */
     @JsonIgnore
-    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "photoQuestion", cascade = CascadeType.REMOVE)
     private List<Answer> answerList;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "photoQuestion", cascade = CascadeType.REMOVE)
     private List<Comment> commentList;
 
     @Column(columnDefinition = "integer default 0", nullable = false)
